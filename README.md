@@ -38,7 +38,7 @@ The following exercises focus on utilizing MongoDB within a MERN stack.
    - Connect to MongoDB in `server.js`:
      ```javascript
      const mongoose = require('mongoose');
-     mongoose.connect('mongodb+srv://admin:admin@martinscluster.mongodb.net/MyFirstDB', { useNewUrlParser: true, useUnifiedTopology: true });
+     mongoose.connect('my_db_connection_string');
      ```
 
 5. **Create a Data Model**
