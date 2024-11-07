@@ -74,7 +74,7 @@ The following exercises focus on utilizing MongoDB within a MERN stack.
      ```
      
    **Explanation**:
-   - async and await are used to handle asynchronous operations like saving data to a database.
+   - **async** and **await** are used to handle asynchronous operations like saving data to a database.
    - async allows us to use await, which pauses the function until the operation completes. Here, await newMovie.save() ensures the movie is saved to the database before continuing, making the code easier to read and manage.  
    - `app.post('/api/movies', ...)`: This sets up a POST route at `/api/movies`, which will be used to add new movies.
    - We extract `title`, `year`, and `poster` from `req.body`, the data sent in the POST request.
