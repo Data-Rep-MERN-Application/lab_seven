@@ -1,4 +1,4 @@
-# Mongo/MERN Data Representation and Querying
+# Lab 7: Mongo/MERN --- Data Representation and Querying
 
 The following exercises focus on utilizing MongoDB within a MERN stack.
 
