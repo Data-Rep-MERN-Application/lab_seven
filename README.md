@@ -49,15 +49,15 @@ The following exercises focus on utilizing MongoDB within a MERN stack.
       For example, defining a schema for a "Movie" model allows you to enforce specific fields like title, year, and poster for each movie document. By setting up a model in Mongoose, you can use it to create, read, update, and delete documents in MongoDB, with   
       Mongoose handling many details behind the scenes.
 
-        ```javascript
-         const movieSchema = new mongoose.Schema({
-           title: String,
-           year: String,
-           poster: String
-         });
+   ```javascript
+     const movieSchema = new mongoose.Schema({
+       title: String,
+       year: String,
+       poster: String
+     });
       
-         const Movie = mongoose.model('Movie', movieSchema);
-        ```
+     const Movie = mongoose.model('Movie', movieSchema);
+   ```
 
 6. **Add Data to MongoDB**
    - Create a method to add new movie records:
