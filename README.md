@@ -4,7 +4,7 @@ The following exercises focus on utilizing MongoDB within a MERN stack.
 
 ### Instructions
 
-1. **Commit and push each solution to GitHub after completing an exercise**
+1. **Commit and push each solution to GitHub after completing an exercise.**
   
 
 2. **React Application Setup**
