@@ -50,29 +50,39 @@ The following exercises focus on utilizing MongoDB within a MERN stack.
     handling many details behind the scenes.
 
       ```javascript
-     const movieSchema = new mongoose.Schema({
-       title: String,
-       year: String,
-       poster: String
-     });
-     const Movie = mongoose.model('Movie', movieSchema);
-     ```
+       const movieSchema = new mongoose.Schema({
+         title: String,
+         year: String,
+         poster: String
+       });
+      
+       const Movie = mongoose.model('Movie', movieSchema);
+      ```
 
-7. **Add Data to MongoDB**
+6. **Add Data to MongoDB**
    - Create a method to add new movie records:
      ```javascript
-     app.post('/api/movies', (req, res) => {
-       Movie.create({
-         title: req.body.title,
-         year: req.body.year,
-         poster: req.body.poster
-       })
-       .then(() => res.send('Data received'))
-       .catch(() => res.send('Data not received'));
-     });
-     ```
+      app.post('/api/movies', async (req, res)=>{
 
-8. **Retrieve All Data**
+      const { title, year, poster } = req.body;
+
+      const newMovie = new Movie({ title, year, poster });
+      await newMovie.save();
+  
+      res.status(201).json({ message: 'Movie created successfully', movie: newMovie });
+      })
+     ```
+     
+   **Explanation**:
+   - async and await are used to handle asynchronous operations like saving data to a database.
+   - async allows us to use await, which pauses the function until the operation completes. Here, await newMovie.save() ensures the movie is saved to the database before continuing, making the code easier to read and manage.  
+   - `app.post('/api/movies', ...)`: This sets up a POST route at `/api/movies`, which will be used to add new movies.
+   - We extract `title`, `year`, and `poster` from `req.body`, the data sent in the POST request.
+   - A new `Movie` instance is created using `new Movie({ title, year, poster })`.
+   - `newMovie.save()` saves the new movie to MongoDB, and a success response is sent with the movie data.
+
+
+7. **Retrieve All Data**
    - Implement a method to fetch all movie records:
      ```javascript
      app.get('/api/movies', async (req, res) => {
@@ -80,8 +90,15 @@ The following exercises focus on utilizing MongoDB within a MERN stack.
        res.json(movies);
      });
      ```
+     
+   **Explanation**:
+   
+   - `app.get('/api/movies', ...)`: Sets up a GET route at `/api/movies`, which will return all movies.
+   - `Movie.find({})` is called. The empty object `{}` as an argument means it fetches all documents in the `movies` collection.
+   - `res.json(movies)` sends the retrieved movies in JSON format back to the client.
 
-9. **Retrieve Data by ID**
+
+8. **Retrieve Data by ID**
    - Create a method to retrieve a specific movie by its ID:
      ```javascript
      app.get('/api/movie/:id', async (req, res) => {
@@ -89,3 +106,9 @@ The following exercises focus on utilizing MongoDB within a MERN stack.
        res.send(movie);
      });
      ```
+     
+    **Explanation**:
+  
+     - `app.get('/api/movie/:id', ...)`: Defines a GET route at `/api/movie/:id`, where `:id` is a parameter for the movie’s unique ID.
+     - `Movie.findById(req.params.id)`: This method searches the `movies` collection for a document with the ID provided in the URL.
+     - If a movie is found, it’s sent back in JSON format.
