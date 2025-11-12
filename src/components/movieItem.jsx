@@ -7,10 +7,10 @@ const MovieItem = (props) => {
             
             
                 <Card.Body>
-                    <Card.Title>{props.mymovie.Title}</Card.Title>
-                    <img src={props.mymovie.Poster} />
+                    <Card.Title>{props.mymovie.title}</Card.Title>
+                    <img src={props.mymovie.poster} />
                 </Card.Body>
-                <Card.Footer className="text-muted">{props.mymovie.Year}</Card.Footer>
+                <Card.Footer className="text-muted">{props.mymovie.year}</Card.Footer>
             </Card>
         </div>
     );
