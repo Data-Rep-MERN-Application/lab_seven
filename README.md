@@ -1,211 +1,114 @@
-# Lab 6: React and Node/Express Data Representation and Querying
 
-The following exercises focus on using **Node/Express** and **React** to represent and query data.
+# Lab 7: Mongo/MERN --- Data Representation and Querying
 
----
+The following exercises focus on utilizing MongoDB within a MERN stack.
 
-## Steps
+### Instructions
 
-### 1. Create a Git Repository
+1. **Commit and push each solution to GitHub after completing an exercise.**
+  
 
-First, create a folder for your project and initialize it as a Git repository:
+2. **React Application Setup**
+   - If you haven’t completed the previous lab, clone the React application from GitHub:
+     ```bash
+     git clone https://github.com/Data-Rep-MERN-Application/lab_six
+     ```
+   - Install project dependencies:
+     ```bash
+     npm install
+     ```
 
-```bash
-git init
-```
+3. **MongoDB Setup**
 
----
+   **NoSQL** is a type of database that provides a flexible and scalable alternative to traditional relational databases. Unlike SQL databases, which rely on tables and structured schemas, NoSQL databases store data in various formats, such as documents, key-value pairs,       graphs, or wide-column stores. This flexibility makes NoSQL databases ideal for handling large volumes of unstructured or semi-structured data and allows for more dynamic scaling, especially for applications with rapidly changing data needs.
 
-### 2. Stage and Commit Files
+   **MongoDB** is a popular NoSQL database known for its document-based storage model. Rather than using rows and tables, MongoDB stores data in JSON-like documents, where each document is a self-contained object with key-value pairs. This model is both flexible and     
+   powerful, allowing for complex, nested data structures and rapid data retrieval. MongoDB’s scalability and ease of use make it well-suited for modern web applications, especially those built with the MERN stack (MongoDB, Express, React, Node.js).
 
-Stage all files and create your first commit:
+   - (a) Create a free MongoDB account and cluster at [MongoDB Atlas](https://www.mongodb.com/).
+   - (b) Allow all IP addresses to connect.
+   - (c) Create a simple user (e.g., `admin` with password `admin`) for database access.
 
-```bash
-git add .
-git commit -m "Initial commit"
-```
+4. **Database Connection with Mongoose**
 
----
+   Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. It provides a schema-based solution for modeling application data, allowing developers to enforce structure, handle data relationships, and perform CRUD operations (Create, Read, Update, Delete) more easily. By defining models for each data type, Mongoose ensures data consistency and helps simplify database interactions.
+   - Install the Mongoose library:
+     ```bash
+     npm install mongoose
+     ```
+   - Connect to MongoDB in `server.js`:
+     ```javascript
+     import mongoose from 'mongoose';
+     mongoose.connect('my_db_connection_string');
+     ```
 
-### 3. Rename the Default Branch
+5. **Create a Data Model**
 
-Rename the default branch to `main`:
+      In Mongoose, a **data model** is a blueprint for defining the structure of data within a MongoDB collection. Models are created from **schemas**, which specify the fields, data types, and constraints for each document in a collection. This schema-based approach 
+      ensures consistency in the way data is stored and accessed, making it easier to validate and manage data across an application.
 
-```bash
-git branch -M main
-```
+      For example, defining a schema for a "Movie" model allows you to enforce specific fields like title, year, and poster for each movie document. By setting up a model in Mongoose, you can use it to create, read, update, and delete documents in MongoDB, with Mongoose handling many details behind the scenes.
+    - Define schema and data model:
+     ```javascript
+       const movieSchema = new mongoose.Schema({
+         title: String,
+         year: String,
+         poster: String
+       });
+      
+       const Movie = mongoose.model('Movie', movieSchema);
+     ```
 
----
+6. **Add Data to MongoDB**
+   - Create a method to add new movie records:
+     ```javascript
+      app.post('/api/movies', async (req, res)=>{
 
-### 4. Push to GitHub
+      const { title, year, poster } = req.body;
 
-Link the repository to a remote GitHub repository:
-
-```bash
-git remote add origin <your-github-repo-url>
-git push -u origin main
-```
-
----
-
-### 5. Commit Regularly
-
-After each exercise, make sure to commit your changes to track progress.
-
----
-
-## 2. Clone and Setup a React Application
-
-* In the last React lab, we built a React application that used components to create and read **movie** data.
-* The final solution can be found here:
-  [GitHub Repository](https://github.com/Data-Rep-MERN-Application/lab_four)
-
-If you did not finish it last week, clone it:
-
-```bash
-git clone https://github.com/Data-Rep-MERN-Application/lab_four
-```
-
-Then install dependencies:
-
-```bash
-npm install
-```
-
----
-
-## 3. Create a Backend with Express
-
-* Create a new folder in your React app called **BackEnd** and add a file named `server.js` inside it.
-* Develop a server using the **Express** framework that returns the following JSON when a GET request is made to `/api/movies`:
-
-```json
-{
-  "movies": [
-    {
-      "Title": "Avengers: Infinity War (server)",
-      "Year": "2018",
-      "imdbID": "tt4154756",
-      "Type": "movie",
-      "Poster": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg"
-    },
-    {
-      "Title": "Captain America: Civil War (server)",
-      "Year": "2016",
-      "imdbID": "tt3498820",
-      "Type": "movie",
-      "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg"
-    },
-    {
-      "Title": "World War Z (server)",
-      "Year": "2013",
-      "imdbID": "tt0816711",
-      "Type": "movie",
-      "Poster": "https://m.media-amazon.com/images/M/MV5BNDQ4YzFmNzktMmM5ZC00MDZjLTk1OTktNDE2ODE4YjM2MjJjXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
-    }
-  ]
-}
-```
-
-Ensure that the server runs on **localhost:4000**.
-
----
-
-## 4. Connect the React App to Read Data from the Node/Express Server
-
-Modify the React app to fetch JSON data from the Node/Express server.
-
-### What is CORS?
-
-**CORS (Cross-Origin Resource Sharing)** is a security feature that prevents a web page from requesting data from a different domain or port unless the server explicitly allows it.
-
-Without CORS, your frontend (React at `localhost:3000`) cannot communicate with your backend (Node/Express at `localhost:4000`).
-
----
-
-### Installing and Using CORS Middleware in Node.js
-
-1. **Install CORS package:**
-
-   ```bash
-   npm install cors
-   ```
-
-2. **Use CORS in the server:**
-
-   Add this code in your `server.js` file:
-
-   ```javascript
-   import cors from 'cors';
-   app.use(cors());
-
-   app.use(function(req, res, next) {
-     res.header("Access-Control-Allow-Origin", "*");
-     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-     next();
-   });
-   ```
-
-This middleware setup allows your frontend app (React) to make API requests to the backend (Express) without CORS issues.
-
----
-
-## 5. Add POST Request to the React App
-
-Modify the React app to send a **POST** request to the server with a new movie object.
-
-1. **Install `body-parser`:**
-
-   ```bash
-   npm install body-parser
-   ```
-
-2. **Update `server.js`:**
-
-   ```javascript
-   import bodyParser from 'body-parser';
-   app.use(bodyParser.urlencoded({ extended: true }));
-   app.use(bodyParser.json());
-   ```
-
-3. **Modify `Create.js`:**
-
-   ```javascript
-   const handleSubmit = (e) => {
-     e.preventDefault();
+      const newMovie = new Movie({ title, year, poster });
+      await newMovie.save();
+  
+      res.status(201).json({ message: 'Movie created successfully', movie: newMovie });
+      })
+     ```
      
-     console.log(`Title: ${title}, Year: ${year}, Poster: ${poster}`);
+   **Explanation**:
+   - **async** and **await** are used to handle asynchronous operations like saving data to a database.
+   - async allows us to use await, which pauses the function until the operation completes. Here, await newMovie.save() ensures the movie is saved to the database before continuing, making the code easier to read and manage.  
+   - `app.post('/api/movies', ...)`: This sets up a POST route at `/api/movies`, which will be used to add new movies.
+   - We extract `title`, `year`, and `poster` from `req.body`, the data sent in the POST request.
+   - A new `Movie` instance is created using `new Movie({ title, year, poster })`.
+   - `newMovie.save()` saves the new movie to MongoDB, and a success response is sent with the movie data.
+
+
+7. **Retrieve All Data**
+   - Implement a method to fetch all movie records:
+     ```javascript
+     app.get('/api/movies', async (req, res) => {
+       const movies = await Movie.find({});
+       res.json(movies);
+     });
+     ```
      
-     const movie = {
-       title: title,
-       year: year,
-       poster: poster
-     };
+   **Explanation**:
+   
+   - `app.get('/api/movies', ...)`: Sets up a GET route at `/api/movies`, which will return all movies.
+   - `Movie.find({})` is called. The empty object `{}` as an argument means it fetches all documents in the `movies` collection.
+   - `res.json(movies)` sends the retrieved movies in JSON format back to the client.
+
+
+8. **Retrieve Data by ID**
+   - Create a method to retrieve a specific movie by its ID:
+     ```javascript
+     app.get('/api/movie/:id', async (req, res) => {
+       const movie = await Movie.findById(req.params.id);
+       res.send(movie);
+     });
+     ```
      
-     axios.post('http://localhost:3000/api/movies', movie)
-       .then((res) => console.log(res.data))
-       .catch((err) => console.log(err.data));
-   };
-   ```
-
----
-
-## Lab Summary: What You Have Learned
-
-By completing this lab, you have learned:
-
-1. **Cross-Origin Resource Sharing (CORS)**
-
-   * What it is, why it’s important, and how to enable it in Express.
-
-2. **Making HTTP Requests from React**
-
-   * Using Axios to send GET requests and display dynamic data.
-
-3. **Handling POST Requests**
-
-   * Creating forms in React and handling POST data in Express.
-
-Together, these steps show how to build a full-stack application where the frontend (React) communicates with a backend (Node/Express) for dynamic, data-driv
-
+    **Explanation**:
+  
+     - `app.get('/api/movie/:id', ...)`: Defines a GET route at `/api/movie/:id`, where `:id` is a parameter for the movie’s unique ID.
+     - `Movie.findById(req.params.id)`: This method searches the `movies` collection for a document with the ID provided in the URL.
+     - If a movie is found, it’s sent back in JSON format.
