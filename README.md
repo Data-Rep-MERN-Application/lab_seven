@@ -38,7 +38,7 @@ The following exercises focus on utilizing MongoDB within a MERN stack.
      ```
    - Connect to MongoDB in `server.js`:
      ```javascript
-     import mongoose from 'mongoose';
+     const mongoose = require('mongoose');
      mongoose.connect('my_db_connection_string');
      ```
 
