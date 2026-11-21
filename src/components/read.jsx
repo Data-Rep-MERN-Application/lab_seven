@@ -7,10 +7,10 @@ const Read = () => {
     useEffect(
         () => {
             //do some http client work
-            axios.get('http://localhost:3000/api/movies')
+            axios.get('http://localhost:4000/api/movies')
                 .then((response) => {
-                    console.log(response.data.myArray);
-                    setMovie(response.data.myArray);
+                    console.log(response.data);
+                    setMovie(response.data);
                 })
                 .catch((error) => { console.log(error) });
         }, []

@@ -1,8 +1,7 @@
 // create.js
 
 import { useState } from "react";
-import axios
- from "axios";
+import axios from 'axios'
 function Create() {
   const [title, setTitle] = useState('');
   const[ year, setYear] = useState('');
@@ -11,17 +10,15 @@ function Create() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(title,year,poster);
-
-    const movie = {
+const movie = {
     title: title,
     year: year,
     poster: poster
   };
   
-  axios.post('http://localhost:3000/api/movies', movie)
+  axios.post('http://localhost:4000/api/movies', movie)
     .then((res) => console.log(res.data))
     .catch((err) => console.log(err.data));
-
   }
 
   return (
