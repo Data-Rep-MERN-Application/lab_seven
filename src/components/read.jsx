@@ -3,16 +3,17 @@ import axios from 'axios';
 import Movies from "./movies";
 const Read = () => {
     const [myMovies, setMovie] = useState([]);
-
-    useEffect(
-        () => {
-            //do some http client work
-            axios.get('http://localhost:4000/api/movies')
+    const Reload = ()=>{
+         axios.get('http://localhost:4000/api/movies')
                 .then((response) => {
                     console.log(response.data);
                     setMovie(response.data);
                 })
                 .catch((error) => { console.log(error) });
+    }
+    useEffect(
+        () => {
+            Reload();
         }, []
     );
 
@@ -20,7 +21,7 @@ const Read = () => {
     return (
         <div>
             <h1>Hello from Read component</h1>
-            <Movies myMovies={myMovies}></Movies>
+            <Movies myMovies={myMovies} Reload={Reload}></Movies>
         </div>
     );
 }
